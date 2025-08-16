@@ -68,7 +68,7 @@ ul {
 .history-entry {
   display: flex;
   gap: 10px;
-  margin: 5px 0;
+  margin: 5px 0;  
 }
 
 .history-entry span {
@@ -77,6 +77,8 @@ ul {
   background: #ee5d5d;
   min-width: 60px;
   text-align: center;
+  display: inline-flex;      
+  align-items: center;       
 }
 
 .history-attempt {
@@ -91,5 +93,10 @@ ul {
 
 
 
+.arrow {
+  font-weight: bold;
+  font-size: 1.5em;
+  color: yellow;
+}
 
 

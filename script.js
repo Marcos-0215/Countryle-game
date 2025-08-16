@@ -176,8 +176,19 @@ function checkGuess() {
     }
 
     const populationSpan = document.createElement("span");
-    populationSpan.textContent = guessPopulation;
     populationSpan.classList.add("history-population");
+
+    const popValue = document.createElement("span");
+    popValue.textContent = guessPopulation;
+
+    const arrow = document.createElement("span");
+    if (guessPopulation < targetPopulation) {
+      arrow.textContent = "↑";
+    } else if (guessPopulation > targetPopulation) {
+      arrow.textContent = "↓";
+    }     
+    arrow.classList.add("arrow");
+    populationSpan.append(popValue, arrow);
 
     const latitudeSpan = document.createElement("span");
     latitudeSpan.textContent = guess.latlng[0];
