@@ -190,6 +190,20 @@ function checkGuess() {
     arrow.classList.add("arrow");
     populationSpan.append(popValue, arrow);
 
+    if (guessPopulation >= targetPopulation*0.8 && guessPopulation <= targetPopulation*1.2 ) {
+      populationSpan.classList.add('correct20');
+    } else if (guessPopulation >= targetPopulation*0.6 && guessPopulation <= targetPopulation*1.4) {
+      populationSpan.classList.add('correct40');
+    }
+
+    console.log("Target " + targetPopulation);
+    console.log("Guess " + guessPopulation);
+    console.log("Min20 " + targetPopulation*0.8);
+    console.log("Max20 " + targetPopulation*1.2);
+    console.log("Min40 " + targetPopulation*0.6);
+    console.log("Max40 " + targetPopulation*1.4);
+
+
     const latitudeSpan = document.createElement("span");
     latitudeSpan.textContent = guess.latlng[0];
     latitudeSpan.classList.add("history-latitude");
