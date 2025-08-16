@@ -87,6 +87,7 @@ ul {
 }
 
 
+.history-attempt.correct { background: green; color: white; }
 .history-name.correct { background: green; color: white; }
 .history-continent.correct { background: green; color: white; }
 .history-population.correct20 { background: green; color: white; }
