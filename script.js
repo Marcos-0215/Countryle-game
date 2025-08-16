@@ -140,11 +140,59 @@ function checkGuess() {
     history.appendChild(answer);
 
   } else {
+
     feedback.textContent = "🔎 Dica adicionada!";
 
-    const li = document.createElement("li");
-    li.textContent = `Tentativa ${triesQnt} de 6: ${guessName} | Hemisfério: ${guessHemisphere}  | Continente: ${guessContinent} | População: ${guessPopulation} | Latitude: ${guessLatitude} | Longitude: ${guessLongitude}`;
-    history.appendChild(li);
+    const palpiteDiv = document.createElement("div");
+    palpiteDiv.classList.add("history-entry");
+
+    const attemptSpan = document.createElement("span");
+    attemptSpan.textContent = `TENTATIVA ${triesQnt} de 6: `;
+    attemptSpan.classList.add("history-attempt"); 
+
+    
+    const nameSpan = document.createElement("span");
+    nameSpan.textContent = guessName;
+    nameSpan.classList.add("history-name"); 
+
+    if (guessName === targetName) {
+      nameSpan.classList.add('correct');
+    }
+
+    const hemisphereSpan = document.createElement("span");
+    hemisphereSpan.textContent = guessHemisphere;
+    hemisphereSpan.classList.add("history-name"); 
+
+    if (guessHemisphere === targetHemisphere) {
+      hemisphereSpan.classList.add('correct');
+    }
+
+    const continentSpan = document.createElement("span");
+    continentSpan.textContent = guessContinent;
+    continentSpan.classList.add("history-continent");
+
+    if (guessContinent === targetContinent) {
+      continentSpan.classList.add('correct');
+    }
+
+    const populationSpan = document.createElement("span");
+    populationSpan.textContent = guessPopulation;
+    populationSpan.classList.add("history-population");
+
+    const latitudeSpan = document.createElement("span");
+    latitudeSpan.textContent = guess.latlng[0];
+    latitudeSpan.classList.add("history-latitude");
+
+    const longitudeSpan = document.createElement("span");
+    longitudeSpan.textContent = guess.latlng[1];
+    longitudeSpan.classList.add("history-longitude");
+
+
+    palpiteDiv.append(attemptSpan, nameSpan, hemisphereSpan, continentSpan, populationSpan, latitudeSpan, longitudeSpan);
+
+
+    history.appendChild(palpiteDiv);
+
 
   }
 

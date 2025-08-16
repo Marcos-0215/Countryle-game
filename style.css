@@ -63,3 +63,33 @@ ul {
 }
 
 
+/****** FEEDBACKS ******/
+
+.history-entry {
+  display: flex;
+  gap: 10px;
+  margin: 5px 0;
+}
+
+.history-entry span {
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: #ee5d5d;
+  min-width: 60px;
+  text-align: center;
+}
+
+.history-attempt {
+  font-weight: bold;
+  background: #f0f0f0;
+}
+
+
+.history-name.correct { background: green; color: white; }
+.history-continent.correct { background: green; color: white; }
+.history-population.correct { background: green; color: white; }
+
+
+
+
+
