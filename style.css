@@ -95,9 +95,22 @@ ul {
 
 
 .arrow {
-  font-weight: bold;
+  font-weight: bolder;
   font-size: 1.5em;
   color: darkblue;
 }
 
 
+
+.history-entry > .history-coords {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background-color: darkblue;
+  color: white;
+  font-weight: bolder;
+  font-size: 1.2em; 
+}

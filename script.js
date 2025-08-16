@@ -134,10 +134,12 @@ function checkGuess() {
   const palpiteDiv = document.createElement("div");
   palpiteDiv.classList.add("history-entry");
   let attemptSpan;
+  let won = false;
 
   if (guessName === targetName) {
     feedback.textContent = "🎉 Acertou! O país era " + targetName;
     gameOn = false;
+    won = true;
 
 
     attemptSpan = document.createElement("span");
@@ -217,8 +219,15 @@ function checkGuess() {
   longitudeSpan.textContent = guess.latlng[1];
   longitudeSpan.classList.add("history-longitude");
 
+  const arrowCoord = getDirectionArrow(guessLatitude, guessLongitude, targetLatitude, targetLongitude);
 
-  palpiteDiv.append(attemptSpan, nameSpan, hemisphereSpan, continentSpan, populationSpan, latitudeSpan, longitudeSpan);
+  const coordsSpan = document.createElement("span");
+  coordsSpan.textContent = arrowCoord;
+  coordsSpan.classList.add("history-coords");
+
+
+
+  palpiteDiv.append(attemptSpan, nameSpan, hemisphereSpan, continentSpan, populationSpan, coordsSpan);
 
 
   history.appendChild(palpiteDiv);
@@ -226,7 +235,7 @@ function checkGuess() {
 
   
 
-  if (triesQnt===6) {
+  if (triesQnt===6 && !won) {
     feedback.textContent = "Acabaram as tentativas! O país era " + targetName;
     gameOn = false;
   }
@@ -235,6 +244,22 @@ function checkGuess() {
   document.getElementById("guess-input").value = "";
 }
 
+function getDirectionArrow(guessLat, guessLng, targetLat, targetLng) {
+  const latDiff = targetLat - guessLat;
+  const lngDiff = targetLng - guessLng;
 
+  // Define direção
+  if (Math.abs(latDiff) < 0.5 && lngDiff > 0) return "→";  
+  if (Math.abs(latDiff) < 0.5 && lngDiff < 0) return "←";  
+  if (Math.abs(lngDiff) < 0.5 && latDiff > 0) return "↑";  
+  if (Math.abs(lngDiff) < 0.5 && latDiff < 0) return "↓"; 
+
+  if (latDiff > 0 && lngDiff > 0) return "↗️"; 
+  if (latDiff > 0 && lngDiff < 0) return "↖️"; 
+  if (latDiff < 0 && lngDiff > 0) return "↘️"; 
+  if (latDiff < 0 && lngDiff < 0) return "↙️";
+
+  return "•";
+}
 
 
