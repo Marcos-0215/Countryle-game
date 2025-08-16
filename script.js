@@ -1,5 +1,5 @@
 
-/****** PUXANDO LISTA DE NOMES DE PAISES ******/
+/****** PUXANDO LISTA DE NOMES DE PAISES DE BACKEND ******/
 
 
 /*
@@ -17,7 +17,7 @@ let target; // País Resposta
 
 xhr.addEventListener('load', () => {
   countries = JSON.parse(xhr.response);
-  console.log(countries);
+  //console.log(countries);
   //console.log(typeof countries);
 
   fillDatalist(countries);
@@ -36,7 +36,7 @@ xhr.send();
 
 
 
-
+/********* PREPARANDO AMBIENTE DE JOGO *********/
 
 function fillDatalist(list) {
 
@@ -61,8 +61,6 @@ function draftTarget() {
 }
 
 
-
-
 const checkBtn = document.getElementById('check-guess-btn');
 
 checkBtn.addEventListener('click', () => {
@@ -78,6 +76,9 @@ document.body.addEventListener('keydown', (event) => {
 let triesQnt = 0;
 let gameOn = true;
 
+
+
+/********* FUNÇÃO PRINCIPAL (processa cada jogada) **********/
 
 function checkGuess() {
   const input = document.getElementById("guess-input").value.trim();
@@ -123,10 +124,10 @@ function checkGuess() {
   }
   
   
-  console.log(guessContinent);
-  console.log(guessPopulation);
-  console.log(guessLatitude);
-  console.log(guessLongitude);
+  //console.log(guessContinent);
+  //console.log(guessPopulation);
+  //console.log(guessLatitude);
+  //console.log(guessLongitude);
 
   console.log(targetName);
   
@@ -186,7 +187,7 @@ function checkGuess() {
   populationSpan.classList.add("history-population");
 
   const popValue = document.createElement("span");
-  popValue.textContent = guessPopulation;
+  popValue.textContent = guessPopulation.toLocaleString("pt-BR");
 
   const arrow = document.createElement("span");
   if (guessPopulation < targetPopulation) {
@@ -203,12 +204,12 @@ function checkGuess() {
     populationSpan.classList.add('correct40');
   }
 
-  console.log("Target " + targetPopulation);
-  console.log("Guess " + guessPopulation);
-  console.log("Min20 " + targetPopulation*0.8);
-  console.log("Max20 " + targetPopulation*1.2);
-  console.log("Min40 " + targetPopulation*0.6);
-  console.log("Max40 " + targetPopulation*1.4);
+  //console.log("Target " + targetPopulation);
+  //console.log("Guess " + guessPopulation);
+  //console.log("Min20 " + targetPopulation*0.8);
+  //console.log("Max20 " + targetPopulation*1.2);
+  //console.log("Min40 " + targetPopulation*0.6);
+  //console.log("Max40 " + targetPopulation*1.4);
 
 
   const latitudeSpan = document.createElement("span");
@@ -243,6 +244,10 @@ function checkGuess() {
 
   document.getElementById("guess-input").value = "";
 }
+
+
+
+/********  FUNÇÃO DA SETA DIRECIONAL APONTANDO PARA A RESPOSTA  ***********/
 
 function getDirectionArrow(guessLat, guessLng, targetLat, targetLng) {
   const latDiff = targetLat - guessLat;
