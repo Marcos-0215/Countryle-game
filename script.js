@@ -13,15 +13,15 @@ const countries = [
 
 const xhr = new XMLHttpRequest();
 let countries;
-let secret; // País Resposta
+let target; // País Resposta
 
 xhr.addEventListener('load', () => {
   countries = JSON.parse(xhr.response);
-  //console.log(xhr.response);
+  console.log(countries);
   //console.log(typeof countries);
 
   fillDatalist(countries);
-  draftSecret();
+  draftTarget();
   /*
   countries.forEach(c => {
     console.log(c.name.common);
@@ -29,7 +29,9 @@ xhr.addEventListener('load', () => {
   */
 });
 
-xhr.open('GET', 'https://restcountries.com/v3.1/all?fields=name');
+const url = 'https://restcountries.com/v3.1/all?fields=name,continents,population,region,subregion,latlng';
+
+xhr.open('GET', url);
 xhr.send();
 
 
@@ -54,12 +56,9 @@ function fillDatalist(list) {
 }
 
 // Resposta -> um país aleatório 
-function draftSecret() {
-  secret = countries[Math.floor(Math.random() * countries.length)];
+function draftTarget() {
+  target = countries[Math.floor(Math.random() * countries.length)];
 }
-
-
-
 
 
 
@@ -77,7 +76,7 @@ document.body.addEventListener('keydown', (event) => {
 });
 
 let triesQnt = 0;
-
+let gameOn = true;
 
 
 function checkGuess() {
@@ -85,7 +84,7 @@ function checkGuess() {
   const feedback = document.getElementById("feedback");
   const history = document.getElementById("tries");
 
-  if (!input) return;
+  if (!input || !gameOn) return;
 
   triesQnt++;
 
@@ -97,17 +96,65 @@ function checkGuess() {
   }
 
   //console.log(guess.name.common);
-  //console.log(secret.name.common);
+  //console.log(target.name.common);
+  const targetName = target.name.common;
+  const targetContinent = target.region;
+  const targetPopulation = target.population;
+  const targetLatitude = target.latlng[0];
+  const targetLongitude = target.latlng[1];
 
+  let targetHemisphere;
+  if (targetLatitude>=0) {
+    targetHemisphere = 'Northern';
+  } else {
+    targetHemisphere = 'Southern';
+  }
 
-  if (guess.name.common === secret.name.common) {
-    feedback.textContent = "🎉 Acertou! O país era " + secret.name.common;
+  const guessName = guess.name.common;
+  const guessContinent = guess.region;
+  const guessPopulation = guess.population;
+  const guessLatitude = guess.latlng[0];
+  const guessLongitude = guess.latlng[1];
+  let guessHemisphere;
+  if (guessLatitude>=0) {
+    guessHemisphere = 'Northern';
+  } else {
+    guessHemisphere = 'Southern';
+  }
+  
+  
+  console.log(guessContinent);
+  console.log(guessPopulation);
+  console.log(guessLatitude);
+  console.log(guessLongitude);
+
+  console.log(targetName);
+  
+
+  if (guessName === targetName) {
+    feedback.textContent = "🎉 Acertou! O país era " + targetName;
+    gameOn = false;
+
+    const answer = document.createElement("li");
+    answer.textContent = `RESPOSTA: ${targetName} | Hemisfério: ${targetHemisphere}  | Continente: ${targetContinent} | População: ${targetPopulation} | Latitude: ${targetLatitude} | Longitude: ${targetLongitude}`;
+    history.appendChild(answer);
+
   } else {
     feedback.textContent = "🔎 Dica adicionada!";
+
     const li = document.createElement("li");
-    li.textContent = `Seu palpite: ${guess.name.common} | Continente: ${guess.continent} | População: ${guess.population}M | Capital: ${guess.capital}`;
+    li.textContent = `Tentativa ${triesQnt} de 6: ${guessName} | Hemisfério: ${guessHemisphere}  | Continente: ${guessContinent} | População: ${guessPopulation} | Latitude: ${guessLatitude} | Longitude: ${guessLongitude}`;
     history.appendChild(li);
+
   }
+
+  
+
+  if (triesQnt===6) {
+    feedback.textContent = "Acabaram as tentativas! O país era " + targetName;
+    gameOn = false;
+  }
+
 
   document.getElementById("guess-input").value = "";
 }
